@@ -1,0 +1,21 @@
+<div class="posts-page">
+  <h1>Posts - Tabela com Estado Global (RxJS)</h1>
+
+  <app-posts-filter
+    [searchTerm]="searchTerm()"
+    (searchChanged)="onSearchChanged($event)"
+    (resetClicked)="resetFilters()"
+  />
+
+  @if (state$ | async; as state) {
+    @if (state.loading) {
+      <p>Carregando posts...</p>
+    } @else if (state.error) {
+      <p>Erro: {{ state.error }}</p>
+    } @else {
+      <app-posts-table [posts]="filteredPosts()" [total]="state.posts.length" />
+    }
+  }
+
+  <app-page-nav [links]="navLinks" />
+</div>

@@ -1,0 +1,39 @@
+<section class="lab-grid">
+  <article class="card">
+    <h2>switchMap</h2>
+    <p>Troca a requisicao em andamento quando o termo muda.</p>
+    <input [formControl]="searchControl" placeholder="Buscar posts..." />
+    @if (searchResults$ | async; as searchResults) {
+      <p class="meta">Resultados: {{ searchResults.length }}</p>
+    }
+  </article>
+
+  <article class="card">
+    <h2>combineLatest</h2>
+    <p>Combina filtro de usuario e ordenacao para montar a lista final.</p>
+    <select [formControl]="userFilterControl">
+      <option value="all">Todos os usuarios</option>
+      <option value="1">Usuario 1</option>
+      <option value="2">Usuario 2</option>
+      <option value="3">Usuario 3</option>
+    </select>
+    <select [formControl]="sortControl">
+      <option value="title">Ordenar por titulo</option>
+      <option value="id">Ordenar por id</option>
+    </select>
+    @if (combinedPosts$ | async; as combinedPosts) {
+      <p class="meta">Total combinado: {{ combinedPosts.length }}</p>
+    }
+  </article>
+
+  <article class="card">
+    <h2>exhaustMap</h2>
+    <p>Ignora cliques repetidos enquanto a carga atual esta em progresso.</p>
+    <button (click)="triggerNextUser()">Carregar proximo usuario</button>
+    @if (nextUser$ | async; as nextUser) {
+      <p class="meta">{{ nextUser?.name }}</p>
+    } @else {
+      <p class="meta">Clique no botao para carregar um usuario.</p>
+    }
+  </article>
+</section>

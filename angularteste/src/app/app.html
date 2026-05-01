@@ -1,0 +1,25 @@
+<div class="app-container">
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">
+        <h1>Angular Study App</h1>
+        <p>RxJS Global State + Signals Local State + HttpClient + Forms</p>
+      </div>
+      <ul class="nav-links">
+        <li><a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a></li>
+        <li><a routerLink="/posts" routerLinkActive="active">Posts (Tabela)</a></li>
+        <li><a routerLink="/users" routerLinkActive="active">Usuários</a></li>
+        <li><a routerLink="/forms-lab" routerLinkActive="active">Forms Lab</a></li>
+        <li><a routerLink="/rxjs-lab" routerLinkActive="active">RxJS Lab</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="footer">
+    <p>Estudo de Angular 18+ | Standalone Components | Reactive Patterns</p>
+  </footer>
+</div>

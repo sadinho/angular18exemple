@@ -1,0 +1,89 @@
+<section class="form-lab">
+  <form class="study-form" [formGroup]="form" (ngSubmit)="submitForm()">
+    <header class="form-header">
+      <div>
+        <p class="eyebrow">Reactive Forms</p>
+        <h2>Formulario de estudo com validação</h2>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" (click)="fillExample()">Preencher exemplo</button>
+        <button type="button" class="ghost" (click)="resetForm()">Limpar</button>
+      </div>
+    </header>
+
+    <div class="form-grid">
+      <label>
+        <span>Nome completo</span>
+        <input type="text" formControlName="fullName" placeholder="Digite seu nome" />
+        @if (hasError('fullName')) {
+          <small>Informe pelo menos 3 caracteres.</small>
+        }
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input type="email" formControlName="email" placeholder="voce@exemplo.com" />
+        @if (hasError('email')) {
+          <small>Digite um email valido.</small>
+        }
+      </label>
+
+      <label>
+        <span>Perfil</span>
+        <select formControlName="role">
+          @for (option of roleOptions; track option.value) {
+            <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </label>
+
+      <fieldset>
+        <legend>Tema favorito</legend>
+        <div class="radio-list">
+          @for (option of topicOptions; track option.value) {
+            <label class="radio-item">
+              <input type="radio" [value]="option.value" formControlName="favoriteTopic" />
+              <span>{{ option.label }}</span>
+            </label>
+          }
+        </div>
+      </fieldset>
+
+      <label class="checkbox-row">
+        <input type="checkbox" formControlName="newsletter" />
+        <span>Receber newsletter de estudo</span>
+      </label>
+
+      <label class="full-width">
+        <span>Observações</span>
+        <textarea formControlName="notes" rows="4" placeholder="Escreva uma observação curta"></textarea>
+        @if (hasError('notes')) {
+          <small>Máximo de 160 caracteres.</small>
+        }
+      </label>
+    </div>
+
+    <footer class="form-footer">
+      <button type="submit">Salvar dados</button>
+      <p class="status">
+        @if (form.valid) {
+          Formulário pronto para envio.
+        } @else {
+          Formulário com pendências de validação.
+        }
+      </p>
+    </footer>
+  </form>
+
+  <aside class="preview-panel">
+    <h3>Pré-visualização</h3>
+    <pre>{{ preview$ | async | json }}</pre>
+
+    @if (submitted()) {
+      <div class="saved-card">
+        <h4>Último envio válido</h4>
+        <pre>{{ savedValue() | json }}</pre>
+      </div>
+    }
+  </aside>
+</section>

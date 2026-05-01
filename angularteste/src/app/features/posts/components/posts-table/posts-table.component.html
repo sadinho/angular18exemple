@@ -1,0 +1,29 @@
+<section class="table-section">
+  <h2>Tabela de Posts ({{ total() }} registros)</h2>
+  @if (posts().length !== total()) {
+    <p class="filtered-count">Mostrando {{ posts().length }} de {{ total() }}</p>
+  }
+
+  <table class="posts-table">
+    <thead>
+      <tr>
+        <th>#ID</th>
+        <th>Usuario</th>
+        <th>Titulo</th>
+        <th>Corpo</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (post of posts(); track post.id) {
+        <tr>
+          <td>{{ post.id }}</td>
+          <td>{{ post.userId }}</td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.body }}</td>
+        </tr>
+      } @empty {
+        <tr><td colspan="4">Nenhum post encontrado</td></tr>
+      }
+    </tbody>
+  </table>
+</section>

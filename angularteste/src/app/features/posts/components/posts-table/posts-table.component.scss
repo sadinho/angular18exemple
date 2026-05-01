@@ -1,0 +1,22 @@
+.posts-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.posts-table th,
+.posts-table td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+.posts-table th {
+  background: #34495e;
+  color: white;
+}
+
+.filtered-count {
+  margin: 0.5rem 0 1rem;
+  color: #6b7280;
+}

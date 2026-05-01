@@ -1,0 +1,14 @@
+<section class="access-panel">
+  <h2>Guard de Rota</h2>
+  <p>
+    Status do acesso:
+    <strong [class.enabled]="studyAccessService.accessEnabled()">
+      {{ studyAccessService.accessEnabled() ? 'Liberado' : 'Bloqueado' }}
+    </strong>
+  </p>
+  <div class="actions">
+    <button type="button" (click)="enable()">Liberar Users</button>
+    <button type="button" (click)="revoke()">Bloquear Users</button>
+  </div>
+  <p class="hint">A rota /users usa um guard e so abre quando o acesso estiver liberado.</p>
+</section>

@@ -1,0 +1,28 @@
+<section>
+  <h2>Usuarios ({{ total() }})</h2>
+  @if (users().length !== total()) {
+    <p>Mostrando {{ users().length }} de {{ total() }}</p>
+  }
+
+  <div class="cards-container">
+    @for (user of users(); track user.id) {
+      <article class="user-card" [class.selected]="isSelected(user.id)">
+        <header class="card-header" (click)="selectUser.emit(user.id)">
+          <h3>{{ user.name }}</h3>
+          <button class="btn-small" (click)="showUserPosts.emit(user.id); $event.stopPropagation()">Posts</button>
+        </header>
+        <div class="card-body">
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          @if (user.phone) {
+            <p><strong>Telefone:</strong> {{ user.phone }}</p>
+          }
+          @if (user.company) {
+            <p><strong>Empresa:</strong> {{ user.company.name }}</p>
+          }
+        </div>
+      </article>
+    } @empty {
+      <p>Nenhum usuario encontrado</p>
+    }
+  </div>
+</section>

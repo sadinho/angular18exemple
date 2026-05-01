@@ -1,0 +1,11 @@
+<section class="filters">
+  <input
+    type="text"
+    [value]="searchTerm()"
+    (input)="onInput($event)"
+    placeholder="Buscar por nome ou email..."
+    class="search-input"
+  />
+  <button (click)="resetClicked.emit()" class="btn btn-secondary">Limpar Filtro</button>
+  <button (click)="reloadClicked.emit()" class="btn btn-primary">Recarregar</button>
+</section>

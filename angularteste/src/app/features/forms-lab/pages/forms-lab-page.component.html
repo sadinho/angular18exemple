@@ -1,0 +1,20 @@
+<div class="forms-lab-page">
+  <h1>Forms Lab - Reactive vs Template-Driven</h1>
+  <p>Estude os dois estilos de formulário: um totalmente programático (Reactive) e outro orientado por template (Template-Driven).</p>
+
+  <div class="forms-container">
+    <section class="form-section">
+      <h2>Forma Reativa (Reactive Forms)</h2>
+      <p>FormBuilder, Validators, valueChanges como Observable. Mais controle e testável.</p>
+      <app-reactive-form-lab />
+    </section>
+
+    <section class="form-section">
+      <h2>Forma Dirigida por Template (Template Forms)</h2>
+      <p>ngModel, validação via atributos HTML. Mais simples e direto ao ponto.</p>
+      <app-template-form-lab />
+    </section>
+  </div>
+
+  <app-page-nav [links]="navLinks" />
+</div>

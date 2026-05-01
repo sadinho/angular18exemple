@@ -1,0 +1,31 @@
+<section class="signals-demo">
+  <h2>Demonstracao de Signals (Estado Local)</h2>
+
+  <div class="counter-section">
+    <h3>Signal Counter</h3>
+    <p>Contador: <strong>{{ counter() }}</strong></p>
+    <button (click)="increment()" class="btn btn-primary">Incrementar</button>
+    <button (click)="decrement()" class="btn btn-secondary">Decrementar</button>
+    <button (click)="resetCounter()" class="btn btn-danger">Reset</button>
+  </div>
+
+  <div class="input-section">
+    <h3>Entrada de Texto com Signal</h3>
+    <input
+      type="text"
+      [value]="name()"
+      (input)="onNameChange($event)"
+      placeholder="Digite seu nome"
+      class="input"
+    />
+    <p>Nome digitado: <strong>{{ name() }}</strong></p>
+    <p>Comprimento do nome: <strong>{{ nameLength() }}</strong> caracteres</p>
+  </div>
+
+  <div class="computed-section">
+    <h3>Derived State com Computed</h3>
+    <p>Contador * 2: <strong>{{ doubledCounter() }}</strong></p>
+    <p>Contador e par? <strong [class.success]="isEven()">{{ isEven() ? 'Sim' : 'Nao' }}</strong></p>
+    <p>Status: <strong>{{ status() }}</strong></p>
+  </div>
+</section>

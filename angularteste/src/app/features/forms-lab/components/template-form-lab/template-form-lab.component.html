@@ -1,0 +1,119 @@
+<section class="form-lab">
+  <form class="study-form" #contactForm="ngForm" (ngSubmit)="submitForm()">
+    <header class="form-header">
+      <div>
+        <p class="eyebrow">Template Forms</p>
+        <h2>Formulario template-driven com ngModel</h2>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" (click)="fillExample()">Preencher exemplo</button>
+        <button type="button" class="ghost" (click)="resetForm()">Limpar</button>
+      </div>
+    </header>
+
+    <div class="form-grid">
+      <label>
+        <span>Nome completo</span>
+        <input
+          type="text"
+          name="fullName"
+          [(ngModel)]="model.fullName"
+          required
+          minlength="3"
+          placeholder="Digite seu nome"
+        />
+        @if (hasError('fullName')) {
+          <small>Informe pelo menos 3 caracteres.</small>
+        }
+      </label>
+
+      <label>
+        <span>Email</span>
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="model.email"
+          required
+          email
+          placeholder="voce@exemplo.com"
+        />
+        @if (hasError('email')) {
+          <small>Digite um email valido.</small>
+        }
+      </label>
+
+      <label>
+        <span>Assunto</span>
+        <input
+          type="text"
+          name="subject"
+          [(ngModel)]="model.subject"
+          required
+          placeholder="Assunto da mensagem"
+        />
+        @if (hasError('subject')) {
+          <small>Este campo é obrigatório.</small>
+        }
+      </label>
+
+      <fieldset>
+        <legend>Prioridade</legend>
+        <div class="radio-list">
+          @for (option of priorityOptions; track option.value) {
+            <label class="radio-item">
+              <input
+                type="radio"
+                name="priority"
+                [value]="option.value"
+                [(ngModel)]="model.priority"
+              />
+              <span>{{ option.label }}</span>
+            </label>
+          }
+        </div>
+      </fieldset>
+
+      <label class="full-width">
+        <span>Mensagem</span>
+        <textarea
+          name="message"
+          [(ngModel)]="model.message"
+          required
+          rows="4"
+          placeholder="Escreva sua mensagem aqui"
+        ></textarea>
+        @if (hasError('message')) {
+          <small>Este campo é obrigatório.</small>
+        }
+      </label>
+
+      <label class="checkbox-row">
+        <input type="checkbox" name="agreeTerms" [(ngModel)]="model.agreeTerms" required />
+        <span>Concordo com os termos de estudo</span>
+      </label>
+    </div>
+
+    <footer class="form-footer">
+      <button type="submit">Enviar mensagem</button>
+      <p class="status">
+        @if (contactForm.valid) {
+          Formulário pronto para envio.
+        } @else {
+          Formulário com pendências.
+        }
+      </p>
+    </footer>
+  </form>
+
+  <aside class="preview-panel">
+    <h3>Valores do modelo (ngModel)</h3>
+    <pre>{{ model | json }}</pre>
+
+    @if (submitted()) {
+      <div class="saved-card">
+        <h4>Último envio válido</h4>
+        <pre>{{ savedValue() | json }}</pre>
+      </div>
+    }
+  </aside>
+</section>

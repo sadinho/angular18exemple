@@ -1,0 +1,28 @@
+<div class="users-page">
+  <h1>Usuarios - Estado Global + Signals</h1>
+
+  <app-users-filter
+    [searchTerm]="searchTerm()"
+    (searchChanged)="onSearchChanged($event)"
+    (resetClicked)="resetFilters()"
+    (reloadClicked)="reloadUsers()"
+  />
+
+  @if (state$ | async; as state) {
+    @if (state.loading) {
+      <p>Carregando usuarios...</p>
+    } @else if (state.error) {
+      <p>Erro: {{ state.error }}</p>
+    } @else {
+      <app-users-list
+        [users]="filteredUsers()"
+        [total]="state.users.length"
+        [selectedUserId]="state.selectedUserId"
+        (selectUser)="selectUser($event)"
+        (showUserPosts)="loadUserPosts($event)"
+      />
+    }
+  }
+
+  <app-page-nav [links]="navLinks" />
+</div>
