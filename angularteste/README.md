@@ -79,7 +79,30 @@ form = this.fb.group({
 - Menos código
 - Melhor para formas simples
 
-### 6. **Infraestrutura Angular**
+### 6. **Security Lab** 🔒
+Aprenda a evitar **vulnerabilidades XSS** (Cross-Site Scripting):
+
+```typescript
+// ❌ PERIGOSO: Nunca faça isso com dados do usuário!
+<div [innerHTML]="userInput"></div>
+
+// ✅ SEGURO: Use interpolação (Angular sanitiza por padrão)
+<p>{{ userInput }}</p>
+
+// ⚠️ CUIDADO: Apenas com dados internos confiáveis
+<div [innerHTML]="sanitizer.bypassSecurityTrustHtml(trustedHTML)"></div>
+
+// ✅ MELHOR: Passe dados como @Input, não HTML strings
+<app-child [data]="userInput"></app-child>
+```
+
+**Cenários Demonstrados:**
+- Como Angular protege contra XSS automaticamente
+- Por que `[innerHTML]` é perigoso com dados do usuário
+- Quando (raramente) usar `bypassSecurityTrustHtml`
+- Alternativas seguras com components
+
+### 7. **Infraestrutura Angular**
 
 **Interceptor HTTP**
 ```typescript
@@ -92,6 +115,117 @@ form = this.fb.group({
 // Guard: bloqueia rota se condição não atender
 // Resolver: carrega dados antes da navegação (melhor UX)
 ```
+
+## 🛡️ Segurança Web com Angular
+
+### XSS (Cross-Site Scripting) - Vulnerabilidade #1 da OWASP
+
+Angular protege você **por padrão**, mas é essencial entender como:
+
+#### ✅ O Angular Protege Você
+
+```typescript
+// ✓ SEGURO: Interpolação {{ }} é sanitizada automaticamente
+<p>{{ userInput }}</p>  // Se userInput = '<img src=x onerror="alert()">'
+                         // Resultado: <p>&lt;img src=x onerror="alert()"&gt;</p>
+
+// ✓ SEGURO: Quando você passa dados via @Input/<ng-container
+<app-child [data]="userInput"></app-child>
+
+// ✓ SEGURO: Binding de atributos
+<img [src]="imageUrl" [alt]="altText" />
+
+// ✓ SEGURO: Binding de style/class
+<div [style.color]="userColor"></div>
+```
+
+#### ❌ O que Evitar
+
+```typescript
+// ❌ PERIGOSO: innerHTML com dados do usuário
+<div [innerHTML]="userInput"></div>  // Script malicioso SERÁ executado!
+
+// ❌ PERIGOSO: URLs dinâmicas sem sanitização
+<a [href]="userUrl"></a>  // Pode conter javascript:
+
+// ❌ PERIGOSO: Eval ou Function() com dados do usuário
+const fn = new Function(userCode);  // NUNCA FAÇA ISSO!
+```
+
+#### ⚠️ Usar com Cuidado
+
+```typescript
+// ⚠️ APENAS com conteúdo interno confiável (ex: Markdown renderizado)
+import { DomSanitizer } from '@angular/platform-browser';
+
+constructor(private sanitizer: DomSanitizer) {}
+
+// Exemplo: editor que salva HTML confiável no backend
+renderTrustedMarkdown(html: string) {
+  return this.sanitizer.bypassSecurityTrustHtml(html);  // ⚠️ Cuidado!
+}
+```
+
+### Resumo de Proteção
+
+| Método | Proteção | Uso |
+|--------|----------|-----|
+| `{{ }}` Interpolação | ✅ Total | Sempre! |
+| `@Input/@Output` | ✅ Total | Componentes |
+| `[property]` Property Binding | ✅ Total | Atributos |
+| `[innerHTML]` com usuário | ❌ Nenhuma | NUNCA |
+| `bypassSecurityTrust*()` | ⚠️ Manual | Apenas dados internos |
+
+### Melhores Práticas de Segurança
+
+1. **Validação Backend**
+   ```typescript
+   // Sempre valide no servidor
+   POST /api/posts
+   Body: { content: userInput }  // Validar/sanitizar no backend!
+   ```
+
+2. **Content Security Policy (CSP)**
+   ```nginx
+   # Configure no servidor
+   Content-Security-Policy: default-src 'self'; script-src 'self'
+   X-Content-Type-Options: nosniff
+   X-Frame-Options: DENY
+   X-XSS-Protection: 1; mode=block
+   ```
+
+3. **Encode Dados Dinâmicos**
+   ```typescript
+   // Se precisar renderizar HTML (raro):
+   // 1. Valide no backend
+   // 2. Use DomSanitizer.sanitize() ou bypassSecurityTrustHtml()
+   // 3. Teste extensivamente
+   ```
+
+4. **Mantenha Dependências Atualizadas**
+   ```bash
+   npm audit  # Verifique vulnerabilidades
+   npm update  # Mantenha tudo atualizado
+   ```
+
+### OWASP Top 10 no Angular
+
+| Risco | Angular Proteção | Sua Responsabilidade |
+|-------|-----------------|----------------------|
+| **A1: XSS** | ✅ Sanitização automática | Não use innerHTML com dados do usuário |
+| **A2: CSRF** | ✅ CSRF token automático | HttpClient injeta `X-CSRF-TOKEN` |
+| **A3: Injeção SQL** | ✅ Parameterizado backend | Nunca concatene queries |
+| **A5: Acesso Quebrado** | ⚠️ Guards de rota | Implemente autenticação no backend |
+| **A6: XEE/XXE** | ✅ Parser seguro | XML é raro em aplicações Angular |
+
+###  Navegação no Projeto
+
+1. **Dashboard** (📊) - Comece aqui para entender Signals
+2. **Forms Lab** (🧾) - Compare Reactive vs Template Forms lado a lado
+3. **Security Lab** (🔒) - Aprenda XSS e proteção (NOVO!)
+4. **RxJS Lab** (🧪) - Estude operadores avançados
+5. **Posts** (📄) - Veja estado global + HTTP + Tabela
+6. **Usuários** (👥) - Aprenda Guards e Resolvers
 
 ##  Estrutura do Projeto
 
@@ -161,15 +295,7 @@ npm run build
 # Saída em dist/
 ```
 
-## 📖 Navegação no Projeto
-
-1. **Dashboard** (📊) - Comece aqui para entender Signals
-2. **Forms Lab** (🧾) - Compare Reactive vs Template Forms lado a lado
-3. **RxJS Lab** (🧪) - Estude operadores avançados
-4. **Posts** (📄) - Veja estado global + HTTP + Tabela
-5. **Usuários** (👥) - Aprenda Guards e Resolvers
-
-## 🔍 Conceitos-Chave Estudados
+##  Conceitos-Chave Estudados
 
 ### Estado Management (como em React)
 

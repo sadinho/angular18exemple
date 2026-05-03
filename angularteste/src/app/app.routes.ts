@@ -6,6 +6,7 @@ import { DashboardPageComponent } from './features/dashboard/pages/dashboard-pag
 import { FormsLabPageComponent } from './features/forms-lab/pages/forms-lab-page.component';
 import { PostsPageComponent } from './features/posts/pages/posts-page.component';
 import { RxjsLabPageComponent } from './features/rxjs-lab/pages/rxjs-lab-page.component';
+import { SecurityLabPageComponent } from './features/security-lab/pages/security-lab-page.component';
 import { UsersPageComponent } from './features/users/pages/users-page.component';
 
 export const routes: Routes = [
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'rxjs-lab',
     component: RxjsLabPageComponent
+  },
+  {
+    path: 'security-lab',
+    component: SecurityLabPageComponent
   },
   {
     path: '**',
