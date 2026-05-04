@@ -373,6 +373,35 @@ const [user, setUser] = useState({});
 - [JSONPlaceholder API](https://jsonplaceholder.typicode.com/) (dados fake para testes)
 - [Angular Best Practices](https://angular.dev/guide/styleguide)
 
+## Princípios S.O.L.I.D
+
+Breve orientação prática para aplicar S.O.L.I.D em TypeScript/Angular:
+
+- **Single Responsibility (S)**: cada classe/serviço deve ter uma única razão para mudar. Separe responsabilidades (ex: `ApiService` para acesso a dados; `PostsComponent` só para apresentação).
+
+- **Open/Closed (O)**: aberto à extensão, fechado à modificação. Projete abstrações (interfaces) e estenda comportamento sem alterar código existente (use injection/estratégias).
+
+- **Liskov Substitution (L)**: subtipos devem poder substituir seus supertypes sem quebrar o contrato. Evite métodos que lançam exceções inesperadas ou mudam contratos.
+
+- **Interface Segregation (I)**: prefira interfaces pequenas e específicas a uma interface "gorda". Divida contratos em serviços menores (ex: `IUserFetcher`, `IUserUpdater`).
+
+- **Dependency Inversion (D)**: dependa de abstrações, não de implementações concretas. Injete dependências via construtor e use tokens/interfaces para facilitar testes:
+
+```typescript
+// Exemplo simples
+interface IApiService { get<T>(url: string): Observable<T> }
+class PostsService {
+   constructor(private api: IApiService) {}
+   getPosts() { return this.api.get<Post[]>('/posts'); }
+}
+```
+
+Dicas rápidas:
+- Escreva testes unitários para cada responsabilidade separadamente.
+- Refatore quando uma classe ganhar mais de uma razão para mudar.
+- Use injeção de dependência para facilitar mocks e extensibilidade.
+
+
 ## 💡 Casos de Uso Aprendidos
 
 Este projeto demonstra como construir:
