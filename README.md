@@ -6,6 +6,8 @@ Um projeto **100% dedicado ao estudo** de Angular 21+ com padrões modernos, arq
 
 Este é um aplicativo de referência para **aprender Angular no contexto real**, não apenas teoria. Cada tela, componente e funcionalidade foi construída com fins didáticos, incluindo:
 
+![Demo da Aplicação](public/demo.gif)
+
 - ✅ **Padrões de Arquitetura**: Feature-based, separação de responsabilidades (page containers, componentes de apresentação, shared components)
 - ✅ **Padrões GoF Comentados**: Observer, Facade, Singleton, Composite, Chain of Responsibility
 - ✅ **Testes Unitários Comentados**: 40+ testes com explicações de cada estratégia
